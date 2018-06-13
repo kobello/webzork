@@ -4,7 +4,7 @@ rooms = {
 }
 
 let currentRoom = "182 Main st."
-// let key = "12345"
+let key = "12345"
 console.log(currentRoom + "\nYou are standing on Main Street between Church and South Winooski. There is a door here. A keypad sits on the handle. On the door is a handwritten sign.")
 let doorLocked = true
 process.stdin.on('data', (chunk) => {
@@ -21,10 +21,18 @@ process.stdin.on('data', (chunk) => {
             //     console.log('Success! The door opens. You enter the foyer and the door shuts behind you.')
             // }
         }
-    } else if (action == 'key in 12345' || action == 'enter code 12345') {
+    } else if (action.startsWith('key in'||'enter code')) {
+        keyRe = /[1-9]+/
+        if (key == action.match(/[1-9]+/)) {
+        // action == 'key in 12345' || action == 'enter code 12345')
+         
+
         console.log('Success! The door opens. You enter the foyer and the door shuts behind you.')
         doorLocked = false
         moveToRoom("Foyer")
+        } else {
+            console.log('Bzzzzt! The door is still locked.')
+        }
     }
 
     else {
