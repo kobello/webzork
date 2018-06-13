@@ -21,9 +21,9 @@ process.stdin.on('data', (chunk) => {
             //     console.log('Success! The door opens. You enter the foyer and the door shuts behind you.')
             // }
         }
-    } else if (action.startsWith('key in'||'enter code')) {
-        keyRe = /[1-9]+/
-        if (key == action.match(/[1-9]+/)) {
+    } else if (action.startsWith('key in')||action.startsWith('enter code')) {
+        // keyRe = /[1-9]+/
+        if (key == action.match('12345')) {
         // action == 'key in 12345' || action == 'enter code 12345')
          
 
@@ -36,7 +36,7 @@ process.stdin.on('data', (chunk) => {
     }
 
     else {
-        console.log("Sorry, I don't know how to " + action)
+        console.log("Sorry, I don't know how to " + action + ".")
     }
     //console.log("\n")
 });
