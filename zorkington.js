@@ -1,29 +1,46 @@
-// zork = {
-     
-// }
+rooms = {
+    "182 Main st.": "You are standing on Main Street between Church and South Winooski. There is a door here. A keypad sits on the handle. On the door is a handwritten sign.",
+    Foyer: "You are in a foyer. Or maybe it\'s an antechamber. Or a vestibule. Or an entryway. Or an atrium. Or a narthex. But let\'s forget all that fancy flatlander vocabulary, and just call it a foyer. In Vermont, this is pronounced 'FO-ee-yurr'. A copy of Seven Days lies in a corner."
+}
 
 let currentRoom = "182 Main st."
-
-console.log(currentRoom +"\nYou are standing on Main Street between Church and South Winooski. There is a door here. A keypad sits on the handle. On the door is a handwritten sign.")
-
+// let key = "12345"
+console.log(currentRoom + "\nYou are standing on Main Street between Church and South Winooski. There is a door here. A keypad sits on the handle. On the door is a handwritten sign.")
+let doorLocked = true
 process.stdin.on('data', (chunk) => {
     let action = chunk.toString().trim();
+    console.log("\n")
     if (action == "read sign") {
-        console.log('The sign says "Welcome to Burlington Code Academy! Come on up to the second floor. If the door is locked, use the code 12345.')
+        console.log('The sign says "Welcome to Burlington Code Academy! Come on up to the second floor. If the door is locked, use the code 12345."')
     } else if (action == "take sign") {
         console.log("That would be selfish. How will other students find their way?")
-    } else {
+    } else if (action == "open door") {
+        if (doorLocked) {
+            console.log('The door is locked. There is a keypad on the handle.')
+            // } else {
+            //     console.log('Success! The door opens. You enter the foyer and the door shuts behind you.')
+            // }
+        }
+    } else if (action == 'key in 12345' || action == 'enter code 12345') {
+        console.log('Success! The door opens. You enter the foyer and the door shuts behind you.')
+        doorLocked = false
+        moveToRoom("Foyer")
+    }
+
+    else {
         console.log("Sorry, I don't know how to " + action)
     }
+    //console.log("\n")
 });
 
 
 
-// function moveToRoom(newRoom) {
-//     if (canMoveToRoom(newRoom)) {
-//       currentRoom = newRoom;
-//     }
-//   }
+function moveToRoom(newRoom) {
+    // if (canMoveToRoom(newRoom)) {
+      currentRoom = newRoom;
+      console.log('\nCurrent room: ' + currentRoom + "\n" + rooms[currentRoom])
+    // }
+  }
 
 // let move = function () {
 //     return {
