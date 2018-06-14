@@ -1,18 +1,26 @@
 let rooms = {
-    "182 Main st.": "You are standing on Main Street between Church and South Winooski. There is a door here. A keypad sits on the handle. On the door is a handwritten sign.",
-    'Foyer': "You are in a foyer. Or maybe it\'s an antechamber. Or a vestibule. Or an entryway. Or an atrium. Or a narthex. But let\'s forget all that fancy flatlander vocabulary, and just call it a foyer. In Vermont, this is pronounced 'FO-ee-yurr'. A copy of Seven Days lies in a corner."
+    "182 Main st.": {
+        'description': "You are standing on Main Street between Church and South Winooski. There is a door here. A keypad sits on the handle. On the door is a handwritten sign.",
+        'inventory':['dog poop', 'quarter'],
+    },
+    'Foyer': { 
+        'description': "You are in a foyer. Or maybe it\'s an antechamber. Or a vestibule. Or an entryway. Or an atrium. Or a narthex. But let\'s forget all that fancy flatlander vocabulary, and just call it a foyer. In Vermont, this is pronounced 'FO-ee-yurr'. A copy of Seven Days lies in a corner.",
+        'inventory':['Seven Days']
+    }
 }
 
 let items = {
-    'Seven Days': "Vermont's Alt-Weekly"
-}
+    'Seven Days': "Vermont's Alt-Weekly",
+    'dog poop': 'Brown. Smelly. Literal poop from a dog. I don\'t know what you were expecting.',
+    'quarter': 'SWEET! 25 CENTS!',
+    }
 
 let currentRoom = "182 Main st."
 let key = "12345"
 let doorLocked = true
 let playerInventory = []
-let oneEightTwoMain = []
-let foyerInventory = ['Seven Days']
+// let oneEightTwoMain = []
+// let foyerInventory = ['Seven Days']
 
 moveToRoom("182 Main st.")
 
@@ -24,7 +32,9 @@ process.stdin.on('data', (chunk) => {
 
     if (action == "i") {
         inventory()
-    } else if (currentRoom == '182 Main st.') {
+    } else if (action == "look around") {
+        console.log('' + rooms[currentRoom]['inventory'])
+    }else if (currentRoom == '182 Main st.') {
 
         mainStActions(action);
 
@@ -40,7 +50,7 @@ process.stdin.on('data', (chunk) => {
 function foyerActions(action) {
     if (action == "drop paper" || action == "drop seven days") {
         if (playerInventory != 0) {
-            foyerInventory.push(playerInventory.pop());
+            rooms['Foyer']['inventory'].push(playerInventory.pop());
             console.log("The copy of Seven Days is removed from the player's inventory");
         }
         else {
@@ -48,9 +58,9 @@ function foyerActions(action) {
         }
     }
     else if (action == "take seven days" || action == 'take paper') {
-        if (foyerInventory.length != 0) {
+        if (rooms['Foyer']['inventory'].length != 0) {
             console.log("You pick up the paper and leaf through it looking for comics and ignoring the articles, just like everybody else does.");
-            playerInventory.push(foyerInventory.pop());
+            playerInventory.push(rooms['Foyer']['inventory'].pop());
             console.log(playerInventory);
         }
         else {
@@ -65,7 +75,7 @@ function foyerActions(action) {
 function mainStActions(action) {
     if (action == "drop paper" || action == "drop seven days") {
         if (playerInventory != 0) {
-            oneEightTwoMain.push(playerInventory.pop())
+            rooms['182 Main st.']['inventory'].push(playerInventory.pop())
             console.log("The copy of Seven Days is removed from the player's inventory")
         } else {
             console.log("There's nothing in your inventory!")
@@ -105,7 +115,7 @@ function mainStActions(action) {
 function moveToRoom(newRoom) {
     // if (canMoveToRoom(newRoom)) {
     currentRoom = newRoom;
-    console.log('\nCurrent room: ' + currentRoom + "\n" + rooms[currentRoom])
+    console.log('\nCurrent room: ' + currentRoom + "\n" + rooms[currentRoom]['description'])
     // }
 }
 
