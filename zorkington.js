@@ -27,36 +27,44 @@ process.stdin.on('data', (chunk) => {
     } else if (currentRoom == '182 Main st.') {
 
         mainStActions(action);
-    } else if (currentRoom == 'Foyer') {
-        if (action == "drop paper" || action == "drop seven days") {
-            if (playerInventory != 0){
-                foyerInventory.push(playerInventory.pop())
-                console.log("The copy of Seven Days is removed from the player's inventory")
-            } else {
-                console.log("There's nothing in your inventory!")
-            }
-        }
-        else if (action == "take seven days" || action == 'take paper') {
 
-            if (foyerInventory.length != 0) {
-                console.log("You pick up the paper and leaf through it looking for comics and ignoring the articles, just like everybody else does.")
-                playerInventory.push(foyerInventory.pop())
-                console.log(playerInventory)
-            } else {
-                console.log("You already picked that up!")
-            }
-        } else {
-            console.log("Sorry, I don't know how to " + action + ".")
-        }
+    } else if (currentRoom == 'Foyer') {
+
+        foyerActions(action);
     }
     console.log(currentRoom)
 });
 
 
 
+function foyerActions(action) {
+    if (action == "drop paper" || action == "drop seven days") {
+        if (playerInventory != 0) {
+            foyerInventory.push(playerInventory.pop());
+            console.log("The copy of Seven Days is removed from the player's inventory");
+        }
+        else {
+            console.log("There's nothing in your inventory!");
+        }
+    }
+    else if (action == "take seven days" || action == 'take paper') {
+        if (foyerInventory.length != 0) {
+            console.log("You pick up the paper and leaf through it looking for comics and ignoring the articles, just like everybody else does.");
+            playerInventory.push(foyerInventory.pop());
+            console.log(playerInventory);
+        }
+        else {
+            console.log("You already picked that up!");
+        }
+    }
+    else {
+        console.log("Sorry, I don't know how to " + action + ".");
+    }
+}
+
 function mainStActions(action) {
     if (action == "drop paper" || action == "drop seven days") {
-        if (playerInventory != 0){
+        if (playerInventory != 0) {
             oneEightTwoMain.push(playerInventory.pop())
             console.log("The copy of Seven Days is removed from the player's inventory")
         } else {
