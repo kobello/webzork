@@ -11,6 +11,7 @@ let currentRoom = "182 Main st."
 let key = "12345"
 let doorLocked = true
 let playerInventory = []
+let oneEightTwoMain = []
 let foyerInventory = ['Seven Days']
 
 moveToRoom("182 Main st.")
@@ -27,7 +28,15 @@ process.stdin.on('data', (chunk) => {
 
         mainStActions(action);
     } else if (currentRoom == 'Foyer') {
-        if (action == "take seven days" || action == 'take paper') {
+        if (action == "drop paper" || action == "drop seven days") {
+            if (playerInventory != 0){
+                foyerInventory.push(playerInventory.pop())
+                console.log("The copy of Seven Days is removed from the player's inventory")
+            } else {
+                console.log("There's nothing in your inventory!")
+            }
+        }
+        else if (action == "take seven days" || action == 'take paper') {
 
             if (foyerInventory.length != 0) {
                 console.log("You pick up the paper and leaf through it looking for comics and ignoring the articles, just like everybody else does.")
@@ -46,7 +55,15 @@ process.stdin.on('data', (chunk) => {
 
 
 function mainStActions(action) {
-    if (action == "read sign") {
+    if (action == "drop paper" || action == "drop seven days") {
+        if (playerInventory != 0){
+            oneEightTwoMain.push(playerInventory.pop())
+            console.log("The copy of Seven Days is removed from the player's inventory")
+        } else {
+            console.log("There's nothing in your inventory!")
+        }
+    }
+    else if (action == "read sign") {
         console.log('The sign says "Welcome to Burlington Code Academy! Come on up to the second floor. If the door is locked, use the code 12345."');
     }
     else if (action == "take sign") {
