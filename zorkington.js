@@ -12,9 +12,18 @@ let rooms = {
 }
 
 let items = {
-    'Seven Days': "Vermont's Alt-Weekly",
-    'dog poop': 'Brown. Smelly. Literal poop from a dog. I don\'t know what you were expecting.',
-    'quarter': 'SWEET! 25 CENTS!',
+    'Seven Days': {
+        'description': "Vermont's Alt-Weekly",
+        'onPickUp': 'You pick up the paper and leaf through it looking for comics and ignoring the articles, just like everybody else does.'
+            },
+    'dog poop': {
+        'description': 'Brown. Smelly. Literal poop from a dog. I don\'t know what you were expecting.',
+        'onPickUp': 'squish...',
+    },
+    'quarter':{
+        'description': '25 cents. Minted 1978. How is this still around?',
+        'onPickUp': 'SWEET! 25 CENTS!'
+    }
 }
 
 let currentRoom = "182 Main st."
@@ -58,6 +67,7 @@ function take(itemFromAction) {
         let itemIndex = rooms[currentRoom]["inventory"].indexOf(itemFromAction)
         let item = rooms[currentRoom]["inventory"].splice(itemIndex, 1).toString()
         playerInventory.push(item)
+        console.log(items[item]['onPickUp'])
     } else {
         console.log("I can't take that now.")
     }
@@ -118,7 +128,7 @@ function inventory() {
     } else {
         console.log('You are carrying:')
         for (let item of playerInventory) {
-            console.log(item + ", " + items[item])
+            console.log(item + ", " + items[item]['description'])
         }
     }
 }
