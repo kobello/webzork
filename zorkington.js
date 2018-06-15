@@ -11,6 +11,13 @@ let rooms = {
     }
 }
 
+potentialCommands = {
+    pickUp: ['Pick up', 'pick up', 'take', 'Take', 'Grab', 'grab', 'get', 'Get'],
+    drop: ['drop', 'Drop', 'Put down', 'put down', 'throw away', 'Throw away'],
+    lookAt: ['Look at', 'Look', 'look', 'look at', 'examine', 'Examine'],
+    checkInventory: ['i', 'I', 'Inventory','inventory', 'take inventory', 'Take inventory']
+}
+
 let items = {
     'Seven Days': {
         'description': "Vermont's Alt-Weekly",
