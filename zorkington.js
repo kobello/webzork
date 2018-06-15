@@ -12,7 +12,7 @@ let rooms = {
 }
 
 potentialCommands = {
-    pickUp: ['Pick up', 'pick up', 'take', 'Take', 'Grab', 'grab', 'get', 'Get'],
+    pickUpPaper: ['Pick up paper', 'pick up paper', 'take paper', 'Take paper', 'Grab paper', 'grab paper', 'get paper', 'Get paper', 'Pick up seven days', 'pick up seven days', 'take seven days', 'Take seven days', 'Grab seven days', 'grab seven days', 'get seven days', 'Get seven days'],
     drop: ['drop', 'Drop', 'Put down', 'put down', 'throw away', 'Throw away'],
     lookAt: ['Look at', 'Look', 'look', 'look at', 'examine', 'Examine'],
     checkInventory: ['i', 'I', 'Inventory','inventory', 'take inventory', 'Take inventory']
@@ -41,20 +41,20 @@ let playerInventory = []
 console.log(currentRoom + "\n" + rooms[currentRoom]["description"])
 
 process.stdin.on('data', (chunk) => {
-    let action = chunk.toString().trim();
+    let playerInput = chunk.toString().trim();
     console.log("\n")
 
-    if (action === "i" || action === 'inventory'|| action === 'take inventory') {
+    if (potentialCommands.checkInventory.includes(playerInput)) {
         inventory()
-    } else if (action == "look around") {
+    } else if (playerInput == "look around") {
         console.log('' + rooms[currentRoom]['inventory'] + "\n" + rooms[currentRoom]["description"])
     } else if (currentRoom == "182 Main st.") {
 
-        mainStActions(action);
+        mainStActions(playerInput);
 
     } else if (currentRoom = "182 Main St. - Foyer") {
 
-        foyerActions(action);
+        foyerActions(playerInput);
     }
     console.log(currentRoom)
 });
@@ -80,22 +80,22 @@ function take(itemFromAction) {
     }
 }
 
-function mainStActions(action) {
-    if (action == "drop paper" || action == "drop seven days") {
+function mainStActions(playerInput) {
+    if (playerInput == "drop paper" || playerInput == "drop seven days") {
         drop("Seven Days")
-    } else if (action == "take seven days" || action == 'take paper') {
+    } else if (potentialCommands.pickUpPaper.includes(playerInput)) {
         take('Seven Days')
         
-    } else if (action == "read sign") {
+    } else if (playerInput == "read sign") {
         console.log('The sign says "Welcome to Burlington Code Academy! Come on up to the second floor. If the door is locked, use the code 12345."');
-    } else if (action == "take sign") {
+    } else if (playerInput == "take sign") {
         console.log("That would be selfish. How will other students find their way?");
-    } else if (action == "open door") {
+    } else if (playerInput == "open door") {
         if (doorLocked) {
             console.log('The door is locked. There is a keypad on the handle.');
         }
-    } else if (action.startsWith('key in') || action.startsWith('enter code')) {
-        if (key == action.match('12345')) {
+    } else if (playerInput.startsWith('key in') || playerInput.startsWith('enter code')) {
+        if (key == playerInput.match('12345')) {
             console.log('Success! The door opens. You enter the foyer and the door shuts behind you.');
             doorLocked = false;
             changeRoom("182 Main St. - Foyer");
@@ -103,19 +103,19 @@ function mainStActions(action) {
             console.log('Bzzzzt! The door is still locked.');
         }
     } else {
-        console.log("Sorry, I don't know how to " + action + ".");
+        console.log("Sorry, I don't know how to " + playerInput + ".");
     }
 }
 
-function foyerActions(action) {
-    if (action == "drop paper" || action == "drop seven days") {
+function foyerActions(playerInput) {
+    if (playerInput == "drop paper" || playerInput == "drop seven days") {
         drop("Seven Days")
-    } else if (action == "take seven days" || action == 'take paper') {
+    } else if (potentialCommands.pickUpPaper.includes(playerInput)) {
         take('Seven Days')
-    } else if (action == "go back") {
+    } else if (playerInput == "go back") {
         changeRoom("182 Main st.")
     } else {
-        console.log("Sorry, I don't know how to " + action + ".");
+        console.log("Sorry, I don't know how to " + playerInput + ".");
     }
 }
 
