@@ -4,7 +4,7 @@ let rooms = {
         'inventory':['dog poop', 'quarter'],
     },
     'Foyer': { 
-        'description': "You are in a foyer. Or maybe it\'s an antechamber. Or a vestibule. Or an entryway. Or an atrium. Or a narthex. But let\'s forget all that fancy flatlander vocabulary, and just call it a foyer. In Vermont, this is pronounced 'FO-ee-yurr'. A copy of Seven Days lies in a corner.",
+        'description': "You are in a foyer. Or maybe it\'s an antechamber. Or a vestibule. Or an entryway. Or an atrium. Or a narthex. But let\'s forget all that fancy flatlander vocabulary, and just call it a foyer. In Vermont, this is pronounced 'FO-ee-yurr'. A copy of Seven Days lies in a corner. A set of stairs leads up to another floor. A door leads outside.",
         'inventory':['Seven Days']
     }
 }
@@ -58,10 +58,10 @@ function foyerActions(action) {
         }
     }
     else if (action == "take seven days" || action == 'take paper') {
-        if (rooms['Foyer']['inventory'].length != 0) {
+        if (rooms['Foyer']['inventory'].includes('Seven Days')) {
             console.log("You pick up the paper and leaf through it looking for comics and ignoring the articles, just like everybody else does.");
-            playerInventory.push(rooms['Foyer']['inventory'].pop());
-            console.log(playerInventory);
+            take('Seven Days')
+            // playerInventory.push(rooms['Foyer']['inventory'].pop());
         }
         else {
             console.log("You already picked that up!");
@@ -90,9 +90,6 @@ function mainStActions(action) {
     else if (action == "open door") {
         if (doorLocked) {
             console.log('The door is locked. There is a keypad on the handle.');
-            // } else {
-            //     console.log('Success! The door opens. You enter the foyer and the door shuts behind you.')
-            // }
         }
     }
     else if (action.startsWith('key in') || action.startsWith('enter code')) {
@@ -128,6 +125,28 @@ function inventory() {
             console.log(item + ", " + items[item])
         }
     }
+}
+
+function take(desiredItem) {
+    const roomInventory = rooms[currentRoom]['inventory'];
+
+    if (roomInventory.includes(desiredItem)) {
+
+        const itemFromRoom = roomInventory.splice(roomInventory.indexOf(desiredItem), 1).toString();
+    playerInventory.push(itemFromRoom)
+    console.log('' + desiredItem + ' was added to your inventory.')
+    } else {
+        console.log('There is no ' + desiredItem + ' here.')
+    }
+    // while (rooms[currentRoom]['inventory'].length > rooms[currentRoom]['inventory'].indexOf(itemFromAction)){
+    //     tempInventoryArray.push(rooms[currentRoom]['inventory'].pop())
+    //     console.log(tempInventoryArray)
+    // }
+    // playerInventory.push(tempInventoryArray.pop())
+    // while (tempInventoryArray.length > 0) {
+    //     rooms[currentRoom]['inventory'].push(tempInventoryArray.pop())
+    //     console.log()
+    // }
 }
 
 // let move = function () {
