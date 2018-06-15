@@ -1,10 +1,10 @@
 let rooms = {
     "182 Main st.": {
-        canChangeTo: ["Foyer"],
+        canChangeTo: ["182 Main St. - Foyer"],
         'description': "You are standing on Main Street between Church and South Winooski. There is a door here. A keypad sits on the handle. On the door is a handwritten sign.",
         'inventory': ['dog poop', 'quarter'],
     },
-    'Foyer': {
+    '182 Main St. - Foyer': {
         canChangeTo: ["182 Main st."],
         'description': "You are in a foyer. Or maybe it\'s an antechamber. Or a vestibule. Or an entryway. Or an atrium. Or a narthex. But let\'s forget all that fancy flatlander vocabulary, and just call it a foyer. In Vermont, this is pronounced 'FO-ee-yurr'. A copy of Seven Days lies in a corner. A set of stairs leads up to another floor. A door leads outside.",
         'inventory': ['Seven Days']
@@ -36,7 +36,7 @@ process.stdin.on('data', (chunk) => {
 
         mainStActions(action);
 
-    } else if (currentRoom = "Foyer") {
+    } else if (currentRoom = "182 Main St. - Foyer") {
 
         foyerActions(action);
     }
@@ -88,7 +88,7 @@ function mainStActions(action) {
         if (key == action.match('12345')) {
             console.log('Success! The door opens. You enter the foyer and the door shuts behind you.');
             doorLocked = false;
-            changeRoom("Foyer");
+            changeRoom("182 Main St. - Foyer");
         } else {
             console.log('Bzzzzt! The door is still locked.');
         }
@@ -100,7 +100,7 @@ function mainStActions(action) {
 function foyerActions(action) {
     if (action == "drop paper" || action == "drop seven days") {
         if (playerInventory != 0) {
-            rooms['Foyer']['inventory'].push(playerInventory.pop());
+            rooms['182 Main St. - Foyer']['inventory'].push(playerInventory.pop());
             console.log("The copy of Seven Days is removed from the player's inventory");
         } else {
             console.log("There's nothing in your inventory!");
