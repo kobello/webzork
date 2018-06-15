@@ -28,7 +28,7 @@ process.stdin.on('data', (chunk) => {
     let action = chunk.toString().trim();
     console.log("\n")
 
-    if (action == "i") {
+    if (action === "i" || action === 'inventory'|| action === 'take inventory') {
         inventory()
     } else if (action == "look around") {
         console.log('' + rooms[currentRoom]['inventory'] + "\n" + rooms[currentRoom]["description"])
@@ -58,10 +58,8 @@ function take(itemFromAction) {
         let itemIndex = rooms[currentRoom]["inventory"].indexOf(itemFromAction)
         let item = rooms[currentRoom]["inventory"].splice(itemIndex, 1).toString()
         playerInventory.push(item)
-        console.log(playerInventory)
     } else {
         console.log("I can't take that now.")
-        console.log("" + rooms[currentRoom]["inventory"])
     }
 }
 
