@@ -45,7 +45,15 @@ process.stdin.on('data', (chunk) => {
     console.log(currentRoom)
 });
 
-
+function take(itemFromAction) {
+    if (rooms[currentRoom]["inventory"].includes(itemFromAction)) {
+        playerInventory.push(rooms[currentRoom]["inventory"].splice(itemFromAction).toString())
+        console.log(playerInventory)
+    } else {
+        console.log("I can't take that now.")
+        console.log("" + rooms[currentRoom]["inventory"])
+    }
+}
 
 function foyerActions(action) {
     if (action == "drop paper" || action == "drop seven days") {
@@ -56,18 +64,17 @@ function foyerActions(action) {
         else {
             console.log("There's nothing in your inventory!");
         }
-    }
-    else if (action == "take seven days" || action == 'take paper') {
-        if (rooms['Foyer']['inventory'].length != 0) {
-            console.log("You pick up the paper and leaf through it looking for comics and ignoring the articles, just like everybody else does.");
-            playerInventory.push(rooms['Foyer']['inventory'].pop());
-            console.log(playerInventory);
-        }
-        else {
-            console.log("You already picked that up!");
-        }
-    }
-    else {
+    } else if (action == "take seven days" || action == 'take paper') {
+        take('Seven Days')
+        // if (rooms['Foyer']['inventory'].length != 0) {
+        //     console.log("You pick up the paper and leaf through it looking for comics and ignoring the articles, just like everybody else does.");
+        //     playerInventory.push(rooms['Foyer']['inventory'].pop());
+        //     console.log(playerInventory);
+        // }
+        // else {
+        //     console.log("You already picked that up!");
+        // }
+    } else {
         console.log("Sorry, I don't know how to " + action + ".");
     }
 }
@@ -80,34 +87,30 @@ function mainStActions(action) {
         } else {
             console.log("There's nothing in your inventory!")
         }
-    }
-    else if (action == "read sign") {
+    } else if (action == "take seven days" || action == 'take paper') {
+        take('Seven Days')
+    } else if (action == "read sign") {
         console.log('The sign says "Welcome to Burlington Code Academy! Come on up to the second floor. If the door is locked, use the code 12345."');
-    }
-    else if (action == "take sign") {
+    } else if (action == "take sign") {
         console.log("That would be selfish. How will other students find their way?");
-    }
-    else if (action == "open door") {
+    } else if (action == "open door") {
         if (doorLocked) {
             console.log('The door is locked. There is a keypad on the handle.');
             // } else {
             //     console.log('Success! The door opens. You enter the foyer and the door shuts behind you.')
             // }
         }
-    }
-    else if (action.startsWith('key in') || action.startsWith('enter code')) {
+    } else if (action.startsWith('key in') || action.startsWith('enter code')) {
         // keyRe = /[1-9]+/
         if (key == action.match('12345')) {
             // action == 'key in 12345' || action == 'enter code 12345')
             console.log('Success! The door opens. You enter the foyer and the door shuts behind you.');
             doorLocked = false;
             moveToRoom("Foyer");
-        }
-        else {
+        } else {
             console.log('Bzzzzt! The door is still locked.');
         }
-    }
-    else {
+    } else {
         console.log("Sorry, I don't know how to " + action + ".");
     }
 }
