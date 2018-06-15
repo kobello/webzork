@@ -47,7 +47,7 @@ process.stdin.on('data', (chunk) => {
     if (potentialCommands.checkInventory.includes(playerInput)) {
         inventory()
     } else if (playerInput == "look around") {
-        console.log('' + rooms[currentRoom]['inventory'] + "\n" + rooms[currentRoom]["description"])
+        console.log(rooms[currentRoom]["description"] + " You see " + rooms[currentRoom]['inventory'] + ".")
     } else if (currentRoom == "182 Main st.") {
 
         mainStActions(playerInput);
