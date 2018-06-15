@@ -82,12 +82,7 @@ function take(itemFromAction) {
 
 function mainStActions(action) {
     if (action == "drop paper" || action == "drop seven days") {
-        if (playerInventory != 0) {
-            rooms['182 Main st.']['inventory'].push(playerInventory.pop())
-            console.log("The copy of Seven Days is removed from the player's inventory")
-        } else {
-            console.log("There's nothing in your inventory!")
-        }
+        drop("Seven Days")
     } else if (action == "take seven days" || action == 'take paper') {
         take('Seven Days')
         
@@ -114,12 +109,7 @@ function mainStActions(action) {
 
 function foyerActions(action) {
     if (action == "drop paper" || action == "drop seven days") {
-        if (playerInventory != 0) {
-            rooms['182 Main St. - Foyer']['inventory'].push(playerInventory.pop());
-            console.log("The copy of Seven Days is removed from the player's inventory");
-        } else {
-            console.log("There's nothing in your inventory!");
-        }
+        drop("Seven Days")
     } else if (action == "take seven days" || action == 'take paper') {
         take('Seven Days')
     } else if (action == "go back") {
@@ -137,6 +127,17 @@ function inventory() {
         for (let item of playerInventory) {
             console.log(item + ", " + items[item]['description'])
         }
+    }
+}
+
+function drop(itemFromAction) {
+    if (playerInventory.includes(itemFromAction)) {
+        let itemIndex = playerInventory.indexOf(itemFromAction)
+        let item = playerInventory.splice(itemIndex, 1).toString()
+        rooms[currentRoom]["inventory"].push(item)
+        console.log("You dropped " + item)
+    } else {
+        console.log("I can't drop that now.")
     }
 }
 
