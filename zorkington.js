@@ -1,3 +1,9 @@
+// change 'Foyer' to '182 main st - foyer'
+// when an empty string is input, give it a message other than "sorry i dont know how to "
+// add more words to open inventory. synonyms.
+// 
+
+
 let rooms = {
     "182 Main st.": "You are standing on Main Street between Church and South Winooski. There is a door here. A keypad sits on the handle. On the door is a handwritten sign.",
     'Foyer': "You are in a foyer. Or maybe it\'s an antechamber. Or a vestibule. Or an entryway. Or an atrium. Or a narthex. But let\'s forget all that fancy flatlander vocabulary, and just call it a foyer. In Vermont, this is pronounced 'FO-ee-yurr'. A copy of Seven Days lies in a corner."
