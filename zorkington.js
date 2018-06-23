@@ -39,21 +39,32 @@ let items = {
     }
 }
 
+let playerInput = function (rawInput) {
+    let input = rawInput.toString().trim().toUpperCase();
+}
+
+
 let currentRoom = "182 Main st."
 let key = "12345"
 let doorLocked = true
 let playerInventory = []
 
-console.log(currentRoom + "\n" + rooms[currentRoom]["description"])
+say(currentRoom + "\n" + rooms[currentRoom]["description"])
+;
 
-process.stdin.on('data', (chunk) => {
-    let playerInput = chunk.toString().trim();
-    console.log("\n")
+function start (playerInput) {
+    let input = document.getElementById('input');
+    input.innerHTML = string
+}
 
+
+function say (string) {
+    let output = document.getElementById('output');
+    output.innerHTML = '<br>' + string + '<br>';
     if (potentialCommands.checkInventory.includes(playerInput)) {
         inventory()
     } else if (playerInput == "look around") {
-        console.log(rooms[currentRoom]["description"] + " You see " + rooms[currentRoom]['inventory'] + ".")
+        say(rooms[currentRoom]["description"] + " You see " + rooms[currentRoom]['inventory'] + ".")
     } else if (currentRoom == "182 Main st.") {
 
         mainStActions(playerInput);
@@ -62,16 +73,16 @@ process.stdin.on('data', (chunk) => {
 
         foyerActions(playerInput);
     }
-    console.log(currentRoom)
-});
+    say(currentRoom)
+};
 
-function changeRoom(newRoom) {
+let changeRoom = function changeRoom(newRoom) {
     let validTransitions = rooms[currentRoom].canChangeTo;
     if (validTransitions.includes(newRoom)) {
         currentRoom = newRoom;
-        console.log('\nCurrent room: ' + currentRoom + "\n" + rooms[currentRoom]['description'] + "\n")
+        say('\nCurrent room: ' + currentRoom + "\n" + rooms[currentRoom]['description'] + "\n")
     } else {
-        console.log("Invalid state transition attempted - from " + currentRoom + " to " + newRoom);
+        say("Invalid state transition attempted - from " + currentRoom + " to " + newRoom);
     }
 }
 
@@ -80,9 +91,9 @@ function take(itemFromAction) {
         let itemIndex = rooms[currentRoom]["inventory"].indexOf(itemFromAction)
         let item = rooms[currentRoom]["inventory"].splice(itemIndex, 1).toString()
         playerInventory.push(item)
-        console.log(items[item]['onPickUp'])
+        say(items[item]['onPickUp'])
     } else {
-        console.log("I can't take that now.")
+        say("I can't take that now.")
     }
 }
 
@@ -93,23 +104,23 @@ function mainStActions(playerInput) {
         take('Seven Days')
         
     } else if (playerInput == "read sign") {
-        console.log('The sign says "Welcome to Burlington Code Academy! Come on up to the second floor. If the door is locked, use the code 12345."');
+        say('The sign says "Welcome to Burlington Code Academy! Come on up to the second floor. If the door is locked, use the code 12345."');
     } else if (playerInput == "take sign") {
-        console.log("That would be selfish. How will other students find their way?");
+        say("That would be selfish. How will other students find their way?");
     } else if (playerInput == "open door") {
         if (doorLocked) {
-            console.log('The door is locked. There is a keypad on the handle.');
+            say('The door is locked. There is a keypad on the handle.');
         }
-    } else if (playerInput.startsWith('key in') || playerInput.startsWith('enter code')) {
+    } else if (playerInput('key in') || playerInput('enter code')) {
         if (key == playerInput.match('12345')) {
-            console.log('Success! The door opens. You enter the foyer and the door shuts behind you.');
+            say('Success! The door opens. You enter the foyer and the door shuts behind you.');
             doorLocked = false;
             changeRoom("182 Main St. - Foyer");
         } else {
-            console.log('Bzzzzt! The door is still locked.');
+            say('Bzzzzt! The door is still locked.');
         }
     } else {
-        console.log("Sorry, I don't know how to " + playerInput + ".");
+        say("Sorry, I don't know how to " + playerInput + ".");
     }
 }
 
@@ -121,29 +132,29 @@ function foyerActions(playerInput) {
     } else if (playerInput == "go back") {
         changeRoom("182 Main st.")
     } else {
-        console.log("Sorry, I don't know how to " + playerInput + ".");
+        say("Sorry, I don't know how to " + playerInput + ".");
     }
 }
 
 function inventory() {
     if (playerInventory.length <= 0) {
-        console.log("You are not carrying anything!")
+        say("You are not carrying anything!")
     } else {
-        console.log('You are carrying:')
+        say('You are carrying:')
         for (let item of playerInventory) {
-            console.log(item + ", " + items[item]['description'])
+            say(item + ", " + items[item]['description'])
         }
     }
-}
+}       
 
 function drop(itemFromAction) {
     if (playerInventory.includes(itemFromAction)) {
         let itemIndex = playerInventory.indexOf(itemFromAction)
         let item = playerInventory.splice(itemIndex, 1).toString()
         rooms[currentRoom]["inventory"].push(item)
-        console.log("You dropped " + item)
+        say("You dropped " + item)
     } else {
-        console.log("I can't drop that now.")
+        say("I can't drop that now.")
     }
 }
 
@@ -154,17 +165,17 @@ function drop(itemFromAction) {
 
 //         const itemFromRoom = roomInventory.splice(roomInventory.indexOf(desiredItem), 1).toString();
 //     playerInventory.push(itemFromRoom)
-//     console.log('' + desiredItem + ' was added to your inventory.')
+//     say('' + desiredItem + ' was added to your inventory.')
 //     } else {
-//         console.log('There is no ' + desiredItem + ' here.')
+//         say('There is no ' + desiredItem + ' here.')
 //     }
     // while (rooms[currentRoom]['inventory'].length > rooms[currentRoom]['inventory'].indexOf(itemFromAction)){
     //     tempInventoryArray.push(rooms[currentRoom]['inventory'].pop())
-    //     console.log(tempInventoryArray)
+    //     say(tempInventoryArray)
     // }
     // playerInventory.push(tempInventoryArray.pop())
     // while (tempInventoryArray.length > 0) {
     //     rooms[currentRoom]['inventory'].push(tempInventoryArray.pop())
-    //     console.log()
+    //     say()
     // }
 // }
